@@ -1,0 +1,30 @@
+create or replace procedure exchange_employees_data_if_data
+is
+    l_today_timestamp TIMESTAMP := DATE_SUB(CURRENT_TIMESTAMP(2), INTERVAL 3 MINUTE);
+    cursor exchange_employees_data is 
+    select Id,Name,Email,PhoneNumber,Country,Created,last_upd from employees_m where last_upd >= l_today_timestamp;    
+    total number;
+    cur_var_employees exchange_employees_data%ROWTYPE;
+begin
+    open exchange_employees_data;    
+    loop 
+    fetch exchange_employees_data into cur_var_employees;
+    exit when exchange_employees_data%notfound;    
+    SELECT count(*) into total 
+    FROM employees_c where id = cur_var_employees.Id;
+    if total >0 then
+    UPDATE employees_c
+    SET
+    NAME := cur_var_employees.name,
+    EMAIL := cur_var_employees.Email,
+    PHONENUMBER := cur_var_employees.PHONENUMBER,
+    COUNTRY := cur_var_employees.COUNTRY,
+    CREATED := cur_var_employees.CREATED,
+    LAST_UPD := cur_var_employees.LAST_UPD
+    WHERE id = cur_var_employees.id;
+    else
+    insert into employees_c
+    values(cur_var_employees.Id,cur_var_employees.Name,cur_var_employees.Email,cur_var_employees.PhoneNumber,cur_var_employees.Country,cur_var_employees.Created,cur_var_employees.last_upd); 
+    end if;    
+    end loop;       
+end;
