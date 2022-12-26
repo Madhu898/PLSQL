@@ -1,0 +1,10 @@
+
+CREATE OR REPLACE FUNCTION Employees_count 
+RETURN number IS 
+   total number := 0; 
+BEGIN 
+   SELECT count(*) into total 
+   FROM employees_c;    
+   RETURN total; 
+END;
+
