@@ -1,0 +1,6 @@
+	-- method to get data from one db to another db 
+	CREATE TABLE employees_m -- creating a new table in destination db 
+    ENGINE=CONNECT
+    TABLE_TYPE=ODBC
+    Connection='DSN=DBHOME1;UID=SIEBEL;PWD=Welcome1' -- giving details of the source db from where we are getting data
+    SRCDEF='select * from employees';    -- sql statement that will get data from source db to destination db
