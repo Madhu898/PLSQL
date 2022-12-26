@@ -1,0 +1,10 @@
+
+ -- creating a table cx_error_log 
+ create table cx_error_log
+    (
+    Id int NOT NULL  PRIMARY KEY,
+    record_id varchar(120),
+    Error_message varchar(128),   
+    Created TIMESTAMP  DEFAULT  CURRENT_TIMESTAMP NOT NULL , -- by default it will get timestamp
+    last_upd TIMESTAMP  DEFAULT CURRENT_TIMESTAMP NOT NULL 
+    );
