@@ -1,0 +1,11 @@
+
+create table contacts(
+    id int auto_increment, -- value of id will be auto incremented after entering the first record
+    first_name varchar(50) not null,
+    last_name varchar(50) not null,
+    full_name varchar(101) 
+        as (concat(first_name, ' ', last_name)) virtual,
+    phone varchar(100),
+    contact_group varchar(50) default 'General',
+    primary key(id)
+);
